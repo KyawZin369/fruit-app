@@ -2,8 +2,12 @@ import { useRef } from "react";
 import { useState } from "react";
 import Item from "./Item";
 import Header from "./Header";
+import { useAppContext } from "./ThemedApp";
 
 export default function App() {
+
+  const { mode } = useAppContext;
+
   const [data, setData] = useState([
     { id: 3, content: "Apple" },
     { id: 2, content: "Orange" },
