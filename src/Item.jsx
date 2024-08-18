@@ -1,22 +1,21 @@
 import { useAppContext } from "./ThemedApp";
+import { ListItem, ListItemText, ListItemSecondaryAction, IconButton } from "@mui/material";
+import { Delete as DeleteIcon } from "@mui/icons-material"
 
-const style = {
-  padding: 20,
-  borderBottom: "1px solid transparent",
-  display: "flex",
-  borderRadius: "20px",
-  justifyContent: "space-between",
-};
 
 function Item({ fruit, remove }) {
 
   const { mode } = useAppContext()
 
   return (
-    <li style={{ ...style, borderColor: mode == "dark" ? "#555" : "#ccc" }}>
-      {fruit.content}
-      <button onClick={() => remove(fruit.id)}>Delete</button>
-    </li>
+    <ListItem>
+      <ListItemText primary={fruit.content}/>
+      <ListItemSecondaryAction>
+        <IconButton onClick={()=>remove(fruit.id)}>
+          <DeleteIcon color="error"/>
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
   );
 }
 

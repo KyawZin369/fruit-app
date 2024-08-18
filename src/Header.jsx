@@ -6,6 +6,7 @@ import {
   Add as AddIcon,
   LightMode as LightModeIcon,
   DarkMode as DarkModeIcon,
+  Remove as RemoveIcon
 } from "@mui/icons-material";
 
 export default function Header({ showForm, setShowForm }) {
@@ -16,11 +17,11 @@ export default function Header({ showForm, setShowForm }) {
       <Toolbar>
         <Typography sx={{ flexGrow: 1 }}>App</Typography>
         <Box>
-          <IconButton color="inherit">
-            <AddIcon />
+          <IconButton color="inherit" onClick={()=>setShowForm(!showForm)}>
+            { !showForm ? <AddIcon /> : <RemoveIcon/> }
           </IconButton>
-          <IconButton color="inherit" edge="end">
-            <LightModeIcon/>
+          <IconButton color="inherit" edge="end" onClick={()=>{mode == "dark" ? setMode("light") : setMode("dark")}}>
+            {mode == "dark" ? <LightModeIcon /> : <DarkModeIcon/>}
           </IconButton>
         </Box>
       </Toolbar>

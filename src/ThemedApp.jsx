@@ -1,16 +1,31 @@
-import { createContext , useContext, useState } from "react";
-import App from "./App"
+import { createContext, useContext, useMemo, useState } from "react";
+import { ThemeProvider, createTheme } from '@mui/material';
+import App from "./App";
+import { CssBaseline } from "@mui/material";
 
 const AppContext = createContext();
 
-export function useAppContext () {
-    return useContext(AppContext);
+export function useAppContext() {
+  return useContext(AppContext);
 }
 
 export default function ThemedApp() {
-    const [mode , setMode] = useState("light");
+  const [mode, setMode] = useState();
 
-    return <AppContext.Provider value={{ mode, setMode }}>
-        <App/>
+  const Theme = useMemo(() => {
+    return createTheme({
+      palette: {
+        mode
+      },
+    });
+  }, [mode]);
+
+  return (
+    <AppContext.Provider value={{ mode, setMode }}>
+      <ThemeProvider theme={Theme}>
+        <App />
+        <CssBaseline/>
+      </ThemeProvider>
     </AppContext.Provider>
+  );
 }

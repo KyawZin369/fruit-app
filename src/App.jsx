@@ -3,9 +3,17 @@ import { useState } from "react";
 import Item from "./Item";
 import Header from "./Header";
 import { useAppContext } from "./ThemedApp";
+import {
+  List,
+  Box,
+  Container,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
 
 export default function App() {
-
   const { mode } = useAppContext;
 
   const [data, setData] = useState([
@@ -21,6 +29,8 @@ export default function App() {
     setData([{ id, content }, ...data]);
   };
 
+  
+
   const remove = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
@@ -28,24 +38,37 @@ export default function App() {
   const [showForm, setShowForm] = useState(false);
 
   return (
-    <div>
+    <Box>
       <Header showForm={showForm} setShowForm={setShowForm} />
-      <form
-        style={{ marginBottom: 20, display: showForm ? "flex" : "none"  }}
-        onSubmit={(e) => {
-          e.preventDefault();
-          add(inputRef.current.value);
-          e.currentTarget.reset();
-        }}
-      >
-        <input type="text" ref={inputRef} />
-        <button type="submit">Add</button>
-      </form>
-      <ul className="list">
-        {data.map((fruit) => {
-          return <Item key={fruit.id} fruit={fruit} remove={remove} />;
-        })}
-      </ul>
-    </div>
+      <Container maxWidth="sm" sx={{ mt: 2 }}>
+        {showForm && (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              add(inputRef.current.value);
+              e.currentTarget.reset();
+            }}
+          >
+            <OutlinedInput
+              fullWidth
+              type="text"
+              inputRef={inputRef}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton type="submit">
+                    <AddIcon></AddIcon>
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </form>
+        )}
+        <List>
+          {data.map((fruit) => {
+            return <Item key={fruit.id} fruit={fruit} remove={remove} />;
+          })}
+        </List>
+      </Container>
+    </Box>
   );
 }
